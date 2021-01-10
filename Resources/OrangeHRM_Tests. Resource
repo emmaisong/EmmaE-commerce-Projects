@@ -1,0 +1,526 @@
+*** Settings ***
+Suite Setup       Set Selenium implicit wait    5s
+Test Teardown     Close All Browsers
+Library           FakerLibrary
+Library           SeleniumLibrary
+Resource          ../Resources/OrangeHRM_Tests.Resource
+
+*** Variables ***
+${URL}            https://opensource-demo.orangehrmlive.com/
+${BROWSER}        Chrome
+${HOMEPAGE_LOGIN}    ${URL}  ${BROWSER}
+${USER_ID}  xpath://*[@id="txtUsername"]
+${USER_PASSWORD}  name:txtPassword
+${USER_LOGIN}   id:btnLogin
+${CLICK_ADMIN}  xpath://*[@id="menu_admin_viewAdminModule"]/b
+${CLICK_MANAGEMENT}  id:menu_admin_UserManagement
+${FORGOT_PASSWORD}  xpath://*[@id="forgotPasswordLink"]/a
+${DIRECTORY_BUTTON}  xpath://*[@id="menu_directory_viewDirectory"]/b
+${WELCOME_MESSAGE}  id:welcome
+${TIME_MODULE}  xpath://*[@id="menu_time_viewTimeModule"]/b
+${RECRUITMENT_ELEMENT}  xpath://*[@id="menu_recruitment_viewRecruitmentModule"]/b
+${CANDIDATE_RECRUITMENT}  id:menu_recruitment_viewCandidates
+${VACANCY_RECRUITMENT}  xpath://*[@id="menu_recruitment_viewJobVacancy"]
+${SYSTEM_USER1}  id:searchSystemUser_userType
+${SYSTEM_USER2}  id:searchSystemUser_userType
+${EMPLOYEE_NAME}  xpath://*[@id="searchSystemUser_userName"]
+${EMPLOYEE_STATUS_ENABLED}  name:searchSystemUser[status]
+${EMPLOYEE_STATUS_DISABLED}  name:searchSystemUser[status]
+${SEARCH_BUTTON}  id:searchBtn
+${RESET_BUTTON}  name:_reset
+${ADD_BUTTON}   name:btnAdd
+${DELETE_BUTTON}  xpath://*[@id="btnDelete"]
+${TIMESHEET_EMPLOYEE_NAME}  name:time[employeeName]
+${VIEW_TIMESHEET}  id:btnView
+${ADD_TIMESHEET}  id:btnAddTimesheet
+${ADD_TIMESHEET_DATE}  name:time[date]
+${ADD_TIMESHEET2}  id:addTimesheetBtn
+${EMPLOYEE_TIMESHEET}  xpath:/html/body
+${EMPLOYEE_NAME}  id:employee
+${VIEW_EMPLOYEE}  id:btnView
+${ATTENDANCE_MENU}   id:menu_attendance_Attendance
+${ATTENDANCE_MY_RECORDS}  id:menu_attendance_viewMyAttendanceRecord
+${ATTENDANCE_DATE}  name:attendance[date]
+${EMPLOYEE_NAME}  name:attendance[date]
+${EMPLOYEE_RECORDS}  id:menu_attendance_viewAttendanceRecord
+${ATTENDANCE_RECORD_EMPLOYEE_NAME}  name:attendance[employeeName][empName]
+${EMPLOYEE_NAME_DATE}  id:attendance_date
+${VIEW_EMPLOYEE_RECORDS}  id:btView
+${ATTENDANCE_PUNCH_IN}  id:menu_attendance_punchIn
+${PUNCH_IN_DATE}  id:attendance_date
+${PUNCH_IN_TIME}  name:attendance[time]
+${PUNCH_IN_BUTTON}  name:button
+${CLICK_CONFIGURATION}   id:menu_attendance_configure
+${SAVE_CONFIGURATION}   id:btnSave
+${CLICK_REPORTS}   xpath:/html/body
+${PROJECT_REPORTS}  id:menu_time_Reports
+${PROJECT_REPORTS_CRITERIA}  id:menu_time_displayProjectReportCriteria
+${PROJECT_NAME}  id:time_project_name
+${PROJECT_RANGE_FROMDATE}  id:project_date_range_from_date
+${PROJECT_RANGE_TO_DATE}  name:time[project_date_range][to]
+${VIEW_PROJECT}  id:viewbutton
+${CLICK_EMPLOYEE_REPORTS}  xpath:/html/body
+${EMPLOYEE_NAME}  name:time[employeeName]
+${PROJECT_NAME}  id:time_project_name
+${CLICK_BUZZ_MODULE}  xpath://*[@id="menu_buzz_viewBuzz"]/b
+${STATUS_TAB}  xpath://*[@id="status-tab-label"]
+${BUZZ_UPLOAD}   xpath://*[@id="tabLink2"]
+${BUZZ_SHARE_VIDEO}  xpath://*[@id="rightBarHeadingAnniv"]
+${BUZZ_Element}  xpath://*[@id="tabLink3"]
+${BUZZ_MOST_LIKED}  id:rightBarHeadingMl
+${DIRECTORY_NAME}  name:searchDirectory[emp_name][empName]
+${DIRECTORY_JOB_TITLE}  name:searchDirectory[job_title]
+${DIRECTORY_JOB_LOCATION}  name:searchDirectory[location]
+${DIRECTORY_SEARCH}  id:searchBtn
+${DIRECTORY_RESET}  id:resetBtn
+${ADMIN_GENERAL_INFO}  id:menu_admin_viewOrganizationGeneralInformation
+${ADMIN_ORGANIZATION_MODULE}  id:menu_admin_Organization
+${WAIT_ENABLE}  id:menu_admin_Organization
+${EDIT_GENERAL_INFO}  xpath://*[@id="btnSaveGenInfo"]
+${SAVE_GENERAL_INFO}  name:btnSaveGenInfo
+${CLICK_LOCATION}  id:menu_admin_viewLocations
+${LOCATION_NAME}  id:searchLocation_name
+${LOCATION_CITY}  xpath://*[@id="searchLocation_city"]
+${LOCATION_COUNTRY}  id:searchLocation_country
+${ORGANIZATION_STRUCTURE}  id:menu_admin_viewCompanyStructure
+${ADMIN_JOB_MENU}  id:menu_admin_Job
+${ADMIN_JOB_TITLE_LIST}  xpath://*[@id="menu_admin_viewJobTitleList"]
+${ADD_FILE}  C:resources/Automation_upload.txt
+${UPLOAD_BUTTON}  xpath:/html/body
+${ADD_JOB_TITLE}  name:btnAdd
+#${VERIFY_JOB_TITLE}  xpath://*[@id="jobTitle_jobTitle"]
+${JOB_DESCRIPTION}  name:jobTitle[jobDescription]
+${SAVE}  name:btnSave
+${PAY_GRADE}  id:menu_admin_viewPayGrades
+${PAY_GRADE_1}  id:payGrade_name
+${ADD_PAY_GRADE}  id:btnAdd
+${SAVE}  name:btnSave
+${EMPLOYMENT_STATUS}  id:menu_admin_employmentStatus
+${ADD_EMPLOYMENT_STATUS}  name:btnAdd
+${NEW_EMPLOYMENT_STATUS}  name:empStatus[name]
+${SELECT_STATUS}  xpath:/html/body
+${DELETE_OPTION}  id:btnDelete
+${DIALOG_DELETE}  id:dialogDeleteBtn
+${CANCEL_BUTTON}  name:btnCancel
+${CLICK_JOB_CATEGORY}  id:menu_admin_jobCategory
+${WORK_SHIFTS}  id:menu_admin_workShift
+${QUALIFICATION_MODULE}  id:menu_admin_Qualifications
+${CLICK_SKILLS}  id:menu_admin_viewSkills
+${CLICK_EDUCATION}  id:menu_admin_viewEducation
+${LICENSES_MODULE}  id:menu_admin_viewLicenses
+${LANGUAGES_MODULE}  id:menu_admin_viewLanguages
+${MEMBERSHIP_MODULE}  id:menu_admin_membership
+${NATIONALITIES_MODULE}  id:menu_admin_nationality
+${CLICK_CONFIG}  id:menu_admin_Configuration
+${CLICK_CONFIG_MAIL}  id:menu_admin_listMailConfiguration
+${EDIT_CONFIG}  xpath://*[@id="editBtn"]
+${CHECK_SENDMAIL}  id:emailConfigurationForm_chkSendTestEmail
+${CHECK_MAIL}  id:emailConfigurationForm_cmbMailSendingMethod
+${SAVE_MAIL}  id:editBtn
+${CLICK_PIM_MODULE}  xpath://*[@id="menu_pim_viewPimModule"]/b
+${CLICK_PIM_CONFIGURATION}  id:menu_pim_Configuration
+${PIM_EMPLOYEE_INFO}   name:empsearch[employee_name][empName]
+${PIM_SUPERVISOR_NAME}   id:empsearch_supervisor_name
+${PIM_EMPLOYEE_ID}  id:empsearch_id
+${PIM_JOB-TITLE}  name:empsearch[job_title]
+${PIM_EMPLOYEE_STATUS}  id:empsearch_employee_status
+${PIM_SUB_UNIT}  id:empsearch_sub_unit
+${PIM_TERMINATION}  name:empsearch[termination]
+${PIM_SEARCH_BUTTON}  id:searchBtn
+${PIM_RESET_BUTTON}  xpath://*[@id="resetBtn"]
+${PIM_ADD_EMPLOYEE}  name:btnAdd
+${UPLOAD_BUTTON}  xpath://*[@id="photofile"]
+${PIM_SAVE}  id:btnSave
+${PIM_CHECKBOX}  id:chkLogin
+${PIM_CUSTOM_FIELDS}  id:menu_pim_listCustomFields
+${PIM_ADD_CUSTOM_FIELDS}  xpath://*[@id="buttonAdd"]
+${CLICK_DATA_IMPORT}  id:menu_admin_pimCsvImport
+${UPLOAD_BUTTON}  xpath://*[@id="btnSave"]
+${CLICK_REPORT_METHODS}  id:menu_pim_viewReportingMethods
+${ADD_REPORT_METHODS}  xpath://*[@id="btnAdd"]
+${ID_REPORT_METHODS}  id:reportingMethod_name
+${SAVE_REPORT_METHODS}  id:btnSave
+${PIM_END_CONTRACT}  id:menu_pim_viewTerminationReasons
+${CLICK_EMPLOYEE_LIST}  id:menu_pim_viewEmployeeList
+${EMPLOYEE_LIST_NAME}  name:empsearch[employee_name][empName]
+${EMPLOYEE_LIST_SUPERVISOR}  id:empsearch_supervisor_name
+${EMPLOYEE_LIST_ID}  id:empsearch_id
+${EMPLOYEE_LIST_JOB_TITLE}  id:empsearch_job_title
+${EMPLOYEE_LIST_STATUS}  id:empsearch_employee_status
+${EMPLOYEE_LIST_SUB_UNIT}  id:empsearch_sub_unit
+${EMPLOYEE_LIST_TERMINATION}  id:empsearch_termination
+${SEARCH_EMPLOYEE_LIST}  id:searchBtn
+
+
+
+*** Keywords ***
+
+Enter Email To create Account
+    ${email}=    FakerLibrary.email
+    Log    ${email}
+    Set Test Variable    ${email}
+    Set Selenium Speed    1
+    Input Text    id:organization_email    ${email}
+
+Navigate To Application Homepage And Login Successfully
+    Open Browser  ${URL}  ${BROWSER}
+    Input Text  ${USER_ID}  admin
+    Input Text  ${USER_PASSWORD}  admin123
+    Click Element  ${USER_LOGIN}
+
+Enter Username
+  Input Text  ${USER_ID}  admin
+
+Enter Password
+  Input Text  ${USER_PASSWORD}  admin123
+
+User Login
+  Click Element  ${USER_LOGIN}
+
+Click Admin
+  Click Element  ${CLICK_ADMIN}
+
+User Management
+  Click Element  ${CLICK_MANAGEMENT}
+
+Admin Job
+  Click Element  ${ADMIN_JOB_MENU}
+  Wait Until Element is Enabled  ${ADMIN_JOB_TITLE_LIST}
+  Click Element  ${ADMIN_JOB_TITLE_LIST}
+
+Edit Job Title
+  Click Element  ${ADD_JOB_TITLE}
+  #Input Text  ${VERIFY_JOB_TITLE}    Deputy Vice President
+  Input Text  ${JOB_DESCRIPTION}   I have a clear, logical mind with a practical approach to problem-solving and a drive to see things through to completion. I have more than 2 years of experience in managing and leading teams across multiple sectors. I am eager to learn, I enjoy overcoming challenges, and I have a genuine interest in Business Management and making organisations successful.
+  Choose File  ${UPLOAD_BUTTON}  ${ADD_FILE}
+  Click Element  ${SAVE}
+
+PayGrade
+  Click Element  ${ADMIN_JOB_MENU}
+  Click Element  ${PAY_GRADE}
+  Click Element  ${ADD_PAY_GRADE}
+  #Input Text  ${PAY_GRADE_1}    Grade 7
+  Click Element  ${SAVE}
+
+Employment Status
+   Click Element  ${ADMIN_JOB_MENU}
+   Click Element  ${EMPLOYMENT_STATUS}
+   Click Element  ${ADD_EMPLOYMENT_STATUS}
+   Input Text  ${NEW_EMPLOYMENT_STATUS}   Chief Executive
+   Click Element  ${CANCEL_BUTTON}
+   #Click Element  ${SAVE}
+   #Click Element  ${SELECT_STATUS}
+   #Click Element  ${DELETE_OPTION}
+   #Click Element  ${DIALOG_DELETE}
+
+Job Categories
+    Click Element  ${ADMIN_JOB_MENU}
+    Click Element  ${CLICK_JOB_CATEGORY}
+
+Work Shifts
+   Click Element  ${ADMIN_JOB_MENU}
+   Click Element  ${WORK_SHIFTS}
+
+Qualification
+   #Click Element  ${CLICK_ADMIN}
+   #Click Element  ${ADMIN_JOB_MENU}
+   Click Element  ${QUALIFICATION_MODULE}
+
+Skills
+   Click Element  ${QUALIFICATION_MODULE}
+   Click Element  ${CLICK_SKILLS}
+
+Education
+   Click Element  ${QUALIFICATION_MODULE}
+   Click Element  ${CLICK_EDUCATION}
+
+Licenses
+   Click Element  ${QUALIFICATION_MODULE}
+   Click Element  ${LICENSES_MODULE}
+
+Languages
+   Click Element  ${QUALIFICATION_MODULE}
+   Click Element  ${LANGUAGES_MODULE}
+
+Membership
+  Click Element  ${QUALIFICATION_MODULE}
+  Click Element  ${MEMBERSHIP_MODULE}
+
+Nationalities
+  Click Element  ${CLICK_ADMIN}
+  Click Element  ${NATIONALITIES_MODULE}
+
+Configuration Module
+  Click Element  ${CLICK_ADMIN}
+  Click Element  ${CLICK_CONFIG}
+  Click Element  ${CLICK_CONFIG_MAIL}
+  Click Element  ${EDIT_CONFIG}
+  Click Element  ${SAVE_MAIL}
+  Click Element  ${EDIT_CONFIG}
+  Click Element  ${CHECK_SENDMAIL}
+  Select From List By Index  ${CHECK_MAIL}  0
+  Select From List By Index  ${CHECK_MAIL}  1
+  Click Element  ${SAVE_MAIL}
+
+Admin Organization
+   Click Element    ${ADMIN_ORGANIZATION_MODULE}
+
+General Info
+   Click Element  ${ADMIN_GENERAL_INFO}
+
+Edit Information
+   Click Element  ${EDIT_GENERAL_INFO}
+
+Save Information
+   Click Element  ${SAVE_GENERAL_INFO}
+
+Organization Location
+   Click Element  ${CLICK_LOCATION}
+   Input Text  ${LOCATION_NAME}  Canadian Regional HQ
+   Input Text  ${LOCATION_CITY}  Ottawa
+   Select From List By Index  ${LOCATION_COUNTRY}  38
+
+Organization Structure
+   Click Element  ${ORGANIZATION_STRUCTURE}
+
+Click Forgot Password Button
+  Click link    ${FORGOT_PASSWORD}
+
+Search Directory Elements
+  Click Element  ${DIRECTORY_BUTTON}
+  Input Text  ${DIRECTORY_NAME}     Peter Mac Anderson
+  Input Text  ${DIRECTORY_NAME}     Paul Collings
+
+Directory JobTitle
+  Select From List By Index  ${DIRECTORY_JOB_TITLE}   1
+  Select From List By Index  ${DIRECTORY_JOB_TITLE}   2
+  Select From List By Index  ${DIRECTORY_JOB_TITLE}   3
+  Select From List By Index  ${DIRECTORY_JOB_TITLE}   4
+  Select From List By Index  ${DIRECTORY_JOB_TITLE}   5
+  Select From List By Index  ${DIRECTORY_JOB_TITLE}   6
+  Select From List By Index  ${DIRECTORY_JOB_TITLE}   7
+  Select From List By Index  ${DIRECTORY_JOB_TITLE}   8
+  Select From List By Index  ${DIRECTORY_JOB_TITLE}   9
+  Select From List By Index  ${DIRECTORY_JOB_TITLE}   10
+  Select From List By Index  ${DIRECTORY_JOB_TITLE}   11
+  Select From List By Index  ${DIRECTORY_JOB_TITLE}   12
+  Select From List By Index  ${DIRECTORY_JOB_TITLE}   13
+  Select From List By Index  ${DIRECTORY_JOB_TITLE}   14
+  Select From List By Index  ${DIRECTORY_JOB_TITLE}   15
+  Select From List By Index  ${DIRECTORY_JOB_TITLE}   16
+  Select From List By Index  ${DIRECTORY_JOB_TITLE}   17
+  Select From List By Index  ${DIRECTORY_JOB_TITLE}   18
+  Select From List By Index  ${DIRECTORY_JOB_TITLE}   19
+  Select From List By Index  ${DIRECTORY_JOB_TITLE}   20
+  Select From List By Index  ${DIRECTORY_JOB_TITLE}   21
+  Select From List By Index  ${DIRECTORY_JOB_TITLE}   22
+  Select From List By Index  ${DIRECTORY_JOB_TITLE}   23
+  Select From List By Index  ${DIRECTORY_JOB_TITLE}   24
+  Select From List By Index  ${DIRECTORY_JOB_TITLE}   25
+
+Directory Location
+  Select From List By Index  ${DIRECTORY_JOB_LOCATION}   1
+  Select From List By Index  ${DIRECTORY_JOB_LOCATION}   2
+  Select From List By Index  ${DIRECTORY_JOB_LOCATION}   3
+  Select From List By Index  ${DIRECTORY_JOB_LOCATION}   4
+  Select From List By Index  ${DIRECTORY_JOB_LOCATION}   5
+  Select From List By Index  ${DIRECTORY_JOB_LOCATION}   6
+
+Directory Search
+  Click Element  ${DIRECTORY_SEARCH}
+
+Directory Reset
+  Click Element  ${DIRECTORY_RESET}
+
+
+
+Click Time Module
+  Click Element  ${TIME_MODULE}
+
+Recruitment Element
+  Click Element  ${RECRUITMENT_ELEMENT}
+
+Candidate Recruitment
+   Click Element  ${CANDIDATE_RECRUITMENT}
+
+Vacancy Recruitment
+   Click Element  ${VACANCY_RECRUITMENT}
+
+System Users Entries
+   Select From List By Index    ${SYSTEM_USER1}    1
+   Select From List By Index    ${SYSTEM_USER2}    2
+
+Enter Employee Name
+   Input Text  ${EMPLOYEE_NAME}    hannah.flores
+
+Enter Employee Status
+   Select From List By Index    ${EMPLOYEE_STATUS_ENABLED}    1
+   Select From List By Index    ${EMPLOYEE_STATUS_DISABLED}   2
+
+Click Search Button
+  Click Element  ${SEARCH_BUTTON}
+
+Click Reset Button
+  Click Element  ${RESET_BUTTON}
+
+Click Add Button
+   Click Element  ${ADD_BUTTON}
+
+Click delete Button
+  Click Element  ${DELETE_BUTTON}
+
+My TimeSheets Credentials
+    Input Text  ${TIMESHEET_EMPLOYEE_NAME}    Peter Mac Anderson
+    Click Element  ${VIEW_TIMESHEET}
+    Click Element  ${ADD_TIMESHEET}
+    Input Text  ${ADD_TIMESHEET_DATE}   2020-12-19
+    Click Element  ${ADD_TIMESHEET2}
+
+Employee TimeSheets Credentials
+    Click Element   ${EMPLOYEE_TIMESHEET}
+    Input Text  ${EMPLOYEE_NAME}    Linda Jane Anderson
+    Click Element  ${VIEW_EMPLOYEE}
+
+Attendance
+    Click Element  ${ATTENDANCE_MENU}
+
+My Records
+    Click Element  ${ATTENDANCE_MY_RECORDS}
+    Input Text  ${EMPLOYEE_NAME}    Peter Mac Anderson
+    Input Text     ${ATTENDANCE_DATE}   2020-12-17
+    Click Element  ${ATTENDANCE_MENU}
+    Click Element   ${ATTENDANCE_PUNCH_IN}
+
+Punch In/Out
+    Input Text  ${PUNCH_IN_DATE}  2020-12-19
+    Input Text  ${PUNCH_IN_TIME}  19:14
+    Click Element  ${PUNCH_IN_BUTTON}
+
+Employee Records
+    Click Element  ${EMPLOYEE_RECORDS}
+    Input Text  ${ATTENDANCE_RECORD_EMPLOYEE_NAME}   Peter Mac Anderson
+    Input Text  ${EMPLOYEE_NAME_DATE}   2020-12-19
+    Click Element  id:btView
+
+Configuration
+   Click Element  ${CLICK_CONFIGURATION}
+   Click Element  ${SAVE_CONFIGURATION}
+
+Reports
+   Click Element   ${CLICK_REPORTS}
+   Click Element  ${PROJECT_REPORTS}
+
+Project Reports
+   Click Element  ${PROJECT_REPORTS_CRITERIA}
+   Select From List By Index  ${PROJECT_NAME}  1
+
+Project Date Range
+   Input Text  ${PROJECT_RANGE_FROMDATE}   2020-12-19
+   Input Text  ${PROJECT_RANGE_TO_DATE}   2020-12-23
+   Click Element  ${VIEW_PROJECT}
+
+Employee Reports
+   Click Element  ${CLICK_EMPLOYEE_REPORTS}
+   Input Text  ${EMPLOYEE_NAME}  Peter Mac Anderson
+   Select From List By Index  ${PROJECT_NAME}    1
+
+Click Buzz Module
+   Click Element    ${CLICK_BUZZ_MODULE}
+   Click Element    ${STATUS_TAB}
+   Click Element    ${BUZZ_UPLOAD}
+   Click Element    ${BUZZ_SHARE_VIDEO}
+   Click Element    ${BUZZ_Element}
+   Click Element    xpath://*[@id="rightBarHeadingAnniv"]
+   Click Element    ${BUZZ_MOST_LIKED}
+
+
+Invalid character in the username field should return appropriate error message
+    Navigate To Application Homepage
+    Input Text    id:txtUsername    €!"##&=
+    Input Text    name:txtPassword    admin123
+    Click Button    xpath://*[@id="btnLogin"]
+    page should contain    Invalid credentials
+
+Login With Different Variables Should Return Corresponding Error Message
+    [Arguments]   ${USER_NAME}  ${USER_PASSWORD}  ${ERROR_MESSAGE}
+    Navigate To Application Homepage
+    Input Text  id:txtUsername  ${USER_NAME} Admin
+    Input Text  xpath://*[@id="txtPassword"]   ${USER_PASSWORD}
+    User Login
+    Page Should Contain    ${ERROR_MESSAGE}
+
+Wait Until Enabled
+   Wait Until Element is Enabled    ${WAIT_ENABLE}    10s
+
+
+PIM Module
+  Click Element  ${CLICK_PIM_MODULE}
+
+PIM Configuration
+  Click Element  ${CLICK_PIM_MODULE}
+  Click Element  ${CLICK_PIM_CONFIGURATION}
+  Maximize Browser Window
+  Input Text  ${PIM_EMPLOYEE_INFO}  Peter Mac Anderson
+  Input Text  ${PIM_SUPERVISOR_NAME}  Cassidy Hope
+  Input Text  ${PIM_EMPLOYEE_ID}  0007
+  Select From List By Index  ${PIM_JOB-TITLE}  4
+  Select From List By Index  ${PIM_EMPLOYEE_STATUS}  5
+  Select From List By Index  ${PIM_SUB_UNIT}  3
+  Select From List By Index  ${PIM_TERMINATION}  2
+  Wait Until Element Is Enabled  ${PIM_SEARCH_BUTTON}
+  Click Element  ${PIM_SEARCH_BUTTON}
+  Wait Until Element Is Enabled  ${PIM_RESET_BUTTON}
+  Click Element  ${PIM_RESET_BUTTON}
+  Click Element  ${CLICK_PIM_MODULE}
+  Click Element  ${PIM_ADD_EMPLOYEE}
+
+PIM Add Employee
+  Click Element  ${CLICK_PIM_MODULE}
+  Click Element  ${CLICK_PIM_CONFIGURATION}
+  Maximize Browser Window
+  Click Element  ${PIM_ADD_EMPLOYEE}
+  Click Element  ${PIM_CHECKBOX}
+  Click Element  ${PIM_SAVE}
+
+Customer Field
+  Click Element  ${CLICK_PIM_MODULE}
+  Click Element  ${CLICK_PIM_CONFIGURATION}
+  Click Element  ${PIM_CUSTOM_FIELDS}
+  Click Element  ${PIM_ADD_CUSTOM_FIELDS}
+
+Data Import
+  Click Element  ${CLICK_PIM_MODULE}
+  Click Element  ${CLICK_PIM_CONFIGURATION}
+  Click Element  ${CLICK_DATA_IMPORT}
+  Choose File  ${UPLOAD_BUTTON}  ${ADD_FILE}
+
+Reporting Methods
+   Click Element  ${CLICK_PIM_MODULE}
+   Click Element  ${CLICK_PIM_CONFIGURATION}
+   Click Element  ${CLICK_REPORT_METHODS}
+   Click Element  ${ADD_REPORT_METHODS}
+   Input Text  ${ID_REPORT_METHODS}   Peter Mac Anderson
+   Click Element  ${SAVE_REPORT_METHODS}
+
+Reasons For End Of Contract
+   Click Element  ${CLICK_PIM_MODULE}
+   Click Element  ${CLICK_PIM_CONFIGURATION}
+   Click Element  ${PIM_END_CONTRACT}
+
+Employee List
+   Click Element  ${CLICK_PIM_MODULE}
+   Click Element  ${CLICK_EMPLOYEE_LIST}
+   Input Text  ${EMPLOYEE_LIST_NAME}    Peter Mac Anderson
+   Input Text  ${EMPLOYEE_LIST_SUPERVISOR}  Cassidy Hope
+   Input Text  ${EMPLOYEE_LIST_ID}   0007
+   Select From List By Index   ${EMPLOYEE_LIST_JOB_TITLE}   4
+   Select From List By Index  ${EMPLOYEE_LIST_STATUS}  5
+   Select From List By Index  ${EMPLOYEE_LIST_SUB_UNIT}  3
+   Select From List By Index   ${EMPLOYEE_LIST_TERMINATION}  2
+   Click Element  ${SEARCH_EMPLOYEE_LIST}
+
+Add Employee
+
+
+Re
+id:menu_core_viewDefinedPredefinedReports
